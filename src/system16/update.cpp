@@ -148,13 +148,20 @@ void updateHomepage() {
         display.sendBuffer();
 
         if (remoteDoc.containsKey("updates_file")) {
-            const char* path = remoteDoc["updates_file"]["local_path"];
-            const char* url = remoteDoc["updates_file"]["url"];
+            JsonArray fileList = remoteDoc["updates_file"].as<JsonArray>();
 
-            updateUpdatingScreen();
+            for (JsonObject fileItem : fileList) {
+                const char* path = fileItem["local_path"];
+                const char* url = fileItem["url"];
 
-            if (downloadAndSave(client, url, path)) {
-                Serial.println("File Update Success");
+                Serial.printf("Downloading %s from %s\n", path, url);
+                updateUpdatingScreen();
+
+                if (downloadAndSave(client, url, path)) {
+                    Serial.println("File Update Success");
+                } else {
+                    Serial.println("Failed while updating some apps");
+                }
             }
         }
 

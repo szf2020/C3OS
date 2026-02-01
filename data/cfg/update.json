@@ -1,11 +1,18 @@
 {
-    "ver": "1.1.02b",
+    "ver": "1.1.0003b",
     "wn": "Security Update",
     "file_updated": "/security/troops.lua",
-    "updates_file": {
-        "local_path": "/security/troops.lua",
-        "url": "https://raw.githubusercontent.com/Ardyanptr/C3OS/refs/heads/main/data/security/troops.lua"
-    },
+    "updates_file": [
+        {
+            "local_path": "/security/troops.lua",
+            "url": "https://raw.githubusercontent.com/Ardyanptr/C3OS/refs/heads/main/data/security/troops.lua"
+        },
+        {
+            "local_path": "/init.lua",
+            "url": "https://raw.githubusercontent.com/Ardyanptr/C3OS/refs/heads/main/data/init.lua"
+
+        }
+    ],
     "updates_config": {
         "local_path": "/cfg/ui_layout.json",
         "url": "https://raw.githubusercontent.com/Ardyanptr/C3OS/refs/heads/main/data/cfg/update.json"
