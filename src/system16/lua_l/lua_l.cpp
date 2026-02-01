@@ -247,6 +247,33 @@ int l_c3_file_exists(lua_State* L) {
     return 1;
 }
 
+int l_c3_file_read(lua_State* L) {
+    const char* path = luaL_checkstring(L, 1);
+    File f = LittleFS.open(path, "r");
+    if (!f) {
+        lua_pushnil(L);
+        return 1;
+    }
+    String content = f.readString();
+    f.close();
+    lua_pushstring(L, content.c_str());
+    return 1;
+}
+
+int l_c3_file_write(lua_State* L) {
+    const char* path = luaL_checkstring(L, 1);
+    const char* data = luaL_checkstring(L, 2);
+    File f = LittleFS.open(path, "w");
+    if (!f) {
+        lua_pushboolean(L, false);
+    }
+
+    f.print(data);
+    f.close();
+    lua_pushboolean(L, true);
+    return 1;
+}
+
 int l_c3_get_heap_kb(lua_State* L) {
     lua_pushinteger(L, ESP.getFreeHeap() / 1024);
     return 1;
@@ -435,6 +462,8 @@ void runLuaScript(const char* path) {
     lua_register(L, "c3_btn", l_c3_btn);
 
     lua_register(L, "c3_file_exists", l_c3_file_exists);
+    lua_register(L, "c3_file_read", l_c3_file_read);
+    lua_register(L, "c3_file_write", l_c3_file_write);
 
     lua_register(L, "c3_http_get", l_c3_http_get);
     lua_register(L, "c3_get_weather", l_c3_get_weather);
